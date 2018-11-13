@@ -62,11 +62,11 @@ dispatch_queue_t queue = dispatch_get_main_queue();
 ```
 * dispatch_group
 ```
-多个处理全部请求结束后想要执行结果处理。
+多个处理全部请求结束后想要执行结果处理
 ```
 * dispatch_once
 ```
-函数是保证在应用程序执行中只执行一次指定处理的API。
+函数是保证在应用程序执行中只执行一次指定处理的API
 ```
 * Dispatch Semaphore
 ```
