@@ -1,5 +1,5 @@
 # GCD使用总结
-## 队列
+## 队列介绍
 *   串行队列
 ```
 dispatch_queue_t queue = dispatch_queue_create("queue.com", DISPATCH_QUEUE_SERIAL);
@@ -16,3 +16,6 @@ dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAU
 ```
 dispatch_queue_t queue = dispatch_get_main_queue();
 ```
+## 队列差异
+*   串行队列
+  *  串行队列是
