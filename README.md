@@ -18,4 +18,4 @@ dispatch_queue_t queue = dispatch_get_main_queue();
 ```
 ## 队列差异
 *   串行队列
-  *  串行队列是
+**  串行队列是
