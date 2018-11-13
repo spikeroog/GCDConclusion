@@ -62,17 +62,17 @@ dispatch_queue_t queue = dispatch_get_main_queue();
 ```
 * dispatch_group
 ```
-多个处理全部请求结束后想要执行结果处理
+多个处理全部请求结束后想要执行结果处理。
 ```
 * dispatch_once
 ```
-函数是保证在应用程序执行中只执行一次指定处理的API
+函数是保证在应用程序执行中只执行一次指定处理的API。
 ```
 * Dispatch Semaphore
 ```
-信号量，可以设置线程数量的函数
+信号量，可以设置线程数量的函数。
 ```
 * dispatch_apply
 ```
-该函数是dispatch_sync函数和Dispatch Group的关联API。按照指定的次数将指定的Block追加到指定的Dispatch Queue中，并等待全部处理执行结束
+该函数是dispatch_sync函数和Dispatch Group的关联API。按照指定的次数将指定的Block追加到指定的Dispatch Queue中，并等待全部处理执行结束。
 ```
