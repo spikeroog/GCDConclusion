@@ -20,7 +20,7 @@ dispatch_queue_t queue = dispatch_queue_create("queue.com", DISPATCH_QUEUE_SERIA
 ```
 dispatch_queue_t queue = dispatch_queue_create("queue.com", DISPATCH_QUEUE_CONCURRENT);
 ```
-*   全局并发队列
+*   全局并发队列（实际上和并发队列没啥区别）
 ```
 dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 ```
@@ -28,19 +28,53 @@ dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAU
 ```
 dispatch_queue_t queue = dispatch_get_main_queue();
 ```
+*   队列组
+```
+// 创建队列组
+dispatch_group_t group = dispatch_group_create();
+// 获取全局并发队列
+dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+
+// 异步并发执行，不会堵塞主线程
+dispatch_group_async(group, queue, ^{
+
+    // 进入队列组
+    dispatch_group_enter(group);
+
+    // 延时操作，拿到数据后离开队列组
+    dispatch_group_leave(group);
+});
+
+// 拦截通知,当队列组中所有的任务都执行完毕的时候回进入到下面的方法
+dispatch_group_notify(group, queue, ^{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // do something
+    });
+});
+```
 ## 队列差异
 *   串行队列
 ```
 多个任务abc按顺序执行(先执行a，再执行b)，当任务a执行完毕后才会执行任务b，遵循FIFO原则。
 ```
+```
+串行队列开辟一条新线程
+```
 *   并发队列
 ```
 多个任务abc按顺序执行(先执行a，在执行b)，不会考虑任务a是否执行完毕，而是a执行后直接执行任务b。
 ```
+```
+并发队列开辟多条新线程
+```
+*   队列组
+```
+队列管理在同一队列的执行顺序是串行的，不同队列是并行的。
+```
 ## 队列使用场景
 以下是gcd对一些耗时操作的使用场景：<br>
 * 数据库操作时，但是我们需要获取最终的数据库（存储，查询，删除，添加）结果再去执行下一步操作，需要用到异步串行队列。<br>
-* 处理图片或者上传图片时，应该在做其他的操作的同时，继续加载或者上传图片，需要用到异步并发队列。<br>
+* 处理图片或者上传图片时，应该在做其他的操作的同时，继续加载或者上传图片，需要用到异步并发队列组。<br>
 * 网络请求，在数据没有回调之前，客户端可以响应其他事件，需要用到异步并发队列。<br>
 
 ## 函数介绍
